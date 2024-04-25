@@ -31,6 +31,11 @@ class AlienInvasion:
             self._check_events()
             self._update_screen()
             self.ship.update()
+            # get rid of bullets that have disapeared.
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            print(len(self.bullets))
             self.bullets.update()
             self.clock.tick(60)
 
@@ -81,3 +86,5 @@ if __name__ == '__main__':
     # Make a game instance, and run the game.
     ai = AlienInvasion()
     ai.run_game()
+
+
