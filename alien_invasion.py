@@ -78,10 +78,13 @@ class AlienInvasion:
             # Get rid of any remaining aliens and bullets.
             self.bullets.empty()
             self.aliens.empty()
-
             # Create a new fleet and center the ship.
             self._create_fleet()
             self.ship.center_ship()
+            # Hide the mouse cursor.
+            pygame.mouse.set_visible(False)
+
+
 
     def _check_keydown_events(self, event):
         # Respond to keypresses.
@@ -150,6 +153,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update position"""
