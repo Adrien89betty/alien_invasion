@@ -67,22 +67,12 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
-            elif event.type == pygame.KEYDOWN:
-                self._check_keydown_events(event)
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks play"""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
-            # Reset game statistics.
-            self.stats.reset_stats()
-            self.game_active = True
-            # Get rid of any remaining aliens and bullets.
-            self.bullets.empty()
-            self.aliens.empty()
-            # Create a new fleet and center the ship.
-            self._create_fleet()
-            self.ship.center_ship()
+            self._game_start()
             # Hide the mouse cursor.
             pygame.mouse.set_visible(False)
 
@@ -99,15 +89,7 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_p:
-            # Reset game statistics.
-            self.stats.reset_stats()
-            self.game_active = True
-            # Get rid of any remaining aliens and bullets.
-            self.bullets.empty()
-            self.aliens.empty()
-            # Create a new fleet and center the ship.
-            self._create_fleet()
-            self.ship.center_ship()
+            self._game_start()
 
 
     def _check_keyup_events(self, event):
@@ -116,6 +98,18 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _game_start(self):
+        # Reset game statistics.
+        self.stats.reset_stats()
+        self.game_active = True
+        # Get rid of any remaining aliens and bullets.
+        self.bullets.empty()
+        self.aliens.empty()
+        # Create a new fleet and center the ship.
+        self._create_fleet()
+        self.ship.center_ship()
+
 
     def _fire_bullet(self):
         """Create new bullet and add it to the bullet group"""
