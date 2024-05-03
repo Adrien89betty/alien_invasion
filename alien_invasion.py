@@ -67,6 +67,8 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks play"""
@@ -96,6 +98,17 @@ class AlienInvasion:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+        elif event.key == pygame.K_p:
+            # Reset game statistics.
+            self.stats.reset_stats()
+            self.game_active = True
+            # Get rid of any remaining aliens and bullets.
+            self.bullets.empty()
+            self.aliens.empty()
+            # Create a new fleet and center the ship.
+            self._create_fleet()
+            self.ship.center_ship()
+
 
     def _check_keyup_events(self, event):
         # Respond to keyreleases.
