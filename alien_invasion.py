@@ -98,6 +98,8 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _game_start(self):
+        # Reset the game settings.
+        self.settings.initialize_dynamic_settings()
         # Reset game statistics.
         self.stats.reset_stats()
         self.game_active = True
