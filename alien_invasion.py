@@ -29,7 +29,6 @@ class AlienInvasion:
 
         # Mixer module initialazing
         pygame.mixer.init()
-        self.shot_sound = pygame.mixer.Sound('sounds/lazer_shot.wav')
 
         # Create an instance to store game statistics and create a scoreboard.
         self.stats = GameStats(self)
@@ -92,7 +91,7 @@ class AlienInvasion:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
-            self.shot_sound.play()
+            self.settings.shot_sound.play()
         elif event.key == pygame.K_p:
             self._game_start()
 
@@ -145,6 +144,7 @@ class AlienInvasion:
         if collisions:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
+            self.settings.explosion_sound.play()
             self.sb.prep_score()
             self.sb.check_high_score()
 
