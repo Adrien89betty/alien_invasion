@@ -14,6 +14,8 @@ class Settings:
         self.shot_sound = pygame.mixer.Sound('sounds/lazer_shot.wav')
         self.explosion_sound = pygame.mixer.Sound('sounds/explosion_sound.wav')
 
+        pygame.mixer.music.load('sounds/bg_retro_music.mp3')
+
         # Ship settings
         self.ship_limit = 3
 

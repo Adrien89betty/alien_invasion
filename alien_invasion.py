@@ -27,8 +27,9 @@ class AlienInvasion:
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
-        # Mixer module initialazing
+        # Mixer module initialazing and play background music.
         pygame.mixer.init()
+        pygame.mixer.music.play(-1)
 
         # Create an instance to store game statistics and create a scoreboard.
         self.stats = GameStats(self)
@@ -118,6 +119,8 @@ class AlienInvasion:
         # Create a new fleet and center the ship.
         self._create_fleet()
         self.ship.center_ship()
+        # Bring down the music volume.
+        pygame.mixer.music.set_volume(0.3)
 
 
     def _fire_bullet(self):
@@ -154,6 +157,9 @@ class AlienInvasion:
             self._create_fleet()
             self.settings.increase_speed()
 
+            # Pause before Leveling up.
+            sleep(3.0)
+            
             # Increase level.
             self.stats.level += 1
             self.sb.prep_level()
@@ -171,6 +177,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # Decrement ships_left.
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
             # Get rid of any remaining bullets and aliens.
             self.bullets.empty()
             self.aliens.empty()
@@ -178,10 +185,11 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
             # Pause
-            sleep(0.5)
+            sleep(1.0)
         else:
             self.game_active = False
             pygame.mouse.set_visible(True)
+            pygame.mixer.music.set_volume(1.0)
 
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update position"""
